@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Folders</title>
+    <script>
+        const base_url = 'https://dikugroup6.github.io';
+
+        window.onload = function() {
+            fetch(base_url) // replace with your base directory URL
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const folders = Array.from(doc.querySelectorAll('a')).filter(a => a.href.endsWith('/'));
+
+                    const container = document.getElementById('folders-container');
+                    folders.forEach(folder => {
+                        const button = document.createElement('button');
+                        button.textContent = folder.textContent;
+                        button.addEventListener('click', () => {
+                            window.location.href = base_url + folder.pathname;
+                        });
+                        container.appendChild(button);
+                    });
+                });
+        };
+    </script>
+</head>
+<body>
+<div id="folders-container"></div>
+</body>
+</html>
