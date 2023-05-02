@@ -7,6 +7,7 @@
 
         window.onload = function() {
             fetch('./') // replace with the path to the current directory
+                .then(data => data.json())
                 .then(data => {
                     console.log(data);
                 });
