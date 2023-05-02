@@ -14,25 +14,62 @@
                     console.log(reports);
                     const container = document.getElementById('folders-container');
                     reports.forEach(report => {
-                        const button = document.createElement('button');
-                        button.textContent = report.name;
+                        const card = document.createElement('div')
+                        card.className += "card p-3"
+
+                        const cardBody = document.createElement('div')
+                        cardBody.className += "card-body"
+
+                        const title = document.createElement('h5')
+                        title.className += "card-title"
+                        const titleText = document.createTextNode(report.name);
+                        title.appendChild(titleText);
+
+                        const text = document.createElement('p')
+                        text.className += "card-text"
+                        text.innerHTML = `<strong>Path:</strong> ${report.path}<br><strong>Size:</strong> ${report.size}<br><strong>Type:</strong> ${report.type}<br><strong>GitHub URL:</strong> ${report.html_url}`
+
+
+                        const button = document.createElement('button')
+                        button.textContent = "View report"
+                        button.className += "btn btn-primary"
                         button.addEventListener('click', () => {
                             window.location.href = `${base_url}/${report.path}`;
                         });
-                        container.appendChild(button);
-                    })
+
+                        cardBody.appendChild(title);
+                        cardBody.appendChild(text);
+                        card.appendChild(cardBody);
+                        card.appendChild(button);
+                        container.appendChild(card);
+                    });
+
                 });
         };
     </script>
 </head>
 <body>
 <h1>Breakout Code Coverage Reports!</h1>
-<div id="folders-container"></div>
+
+<div class="container mx-auto">
+    <div class="row">
+        <div class="col-sm">
+            <div id="folders-container"></div>
+
+        </div>
+        <div class="col-sm">
+            <div id="folders-container"></div>
+
+        </div>
+    </div>
+</div>
+
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 </body>
 </html>
