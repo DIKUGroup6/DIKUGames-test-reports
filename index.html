@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Project Folders</title>
+    <title>Reports</title>
     <script>
         const base_url = 'https://dikugroup6.github.io';
 
         window.onload = function() {
-            fetch('./reports/') // replace with the path to the current directory
+            fetch('./reports/') // replace with the path to the directory containing the reports
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -15,13 +15,20 @@
                 })
                 .then(data => {
                     console.log(data); // log the response body
-                    const directories = data.filter(item => item.type === 'directory');
-                    const container = document.getElementById('folders-container');
-                    directories.forEach(directory => {
+                    const parser = new DOMParser();
+                    const htmlDoc = parser.parseFromString(data, 'text/html');
+                    const links = Array.from(htmlDoc.querySelectorAll('a[href]'));
+                    const container = document.getElementById('reports-container');
+                    links.forEach(link => {
+                        const reportPath = link.getAttribute('href');
+                        if (reportPath.endsWith('/')) {
+                            return; // skip directories
+                        }
+                        const reportName = reportPath.split('/').pop();
                         const button = document.createElement('button');
-                        button.textContent = directory.name;
+                        button.textContent = reportName;
                         button.addEventListener('click', () => {
-                            window.location.href = `${base_url}/${directory.name}`;
+                            window.location.href = `${base_url}/reports/${reportPath}`;
                         });
                         container.appendChild(button);
                     });
@@ -33,6 +40,6 @@
     </script>
 </head>
 <body>
-<div id="folders-container"></div>
+<div id="reports-container"></div>
 </body>
 </html>
