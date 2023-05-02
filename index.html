@@ -1,45 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reports</title>
+    <title>Project Folders</title>
     <script>
-        const base_url = 'https://dikugroup6.github.io';
+        const base_url = 'https://api.github.com/repos/dikugroup6/dikugroup6.github.io/contents/reports';
 
         window.onload = function() {
-            fetch('./reports/') // replace with the path to the directory containing the reports
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.text(); // change to response.text() to log the response body
-                })
-                .then(data => {
-                    console.log(data); // log the response body
-                    const parser = new DOMParser();
-                    const htmlDoc = parser.parseFromString(data, 'text/html');
-                    const links = Array.from(htmlDoc.querySelectorAll('a[href]'));
-                    const container = document.getElementById('reports-container');
-                    links.forEach(link => {
-                        const reportPath = link.getAttribute('href');
-                        if (reportPath.endsWith('/')) {
-                            return; // skip directories
-                        }
-                        const reportName = reportPath.split('/').pop();
-                        const button = document.createElement('button');
-                        button.textContent = reportName;
-                        button.addEventListener('click', () => {
-                            window.location.href = `${base_url}/reports/${reportPath}`;
-                        });
-                        container.appendChild(button);
-                    });
-                })
-                .catch(error => {
-                    console.error(error);
+            fetch(base_url) // replace with the path to the current directory
+                .then(response => response.json())
+                .then(report => {
+                    console.log(report);
+                    const container = document.getElementById('folders-container');
+
                 });
         };
     </script>
 </head>
 <body>
-<div id="reports-container"></div>
+<div id="folders-container"></div>
 </body>
 </html>
