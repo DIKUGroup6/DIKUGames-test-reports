@@ -9,17 +9,7 @@
             fetch('./') // replace with the path to the current directory
                 .then(response => response.json())
                 .then(data => {
-                    const directories = data.filter(item => item.type === 'directory');
-                    const container = document.getElementById('folders-container');
-                    directories.forEach(directory => {
-                        console.log(directory);
-                        const button = document.createElement('button');
-                        button.textContent = directory.name;
-                        button.addEventListener('click', () => {
-                            window.location.href = `${base_url}/${directory.name}`;
-                        });
-                        container.appendChild(button);
-                    });
+                    console.log(data);
                 });
         };
     </script>
