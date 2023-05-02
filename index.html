@@ -6,19 +6,17 @@
         const base_url = 'https://dikugroup6.github.io';
 
         window.onload = function() {
-            fetch(base_url) // replace with your base directory URL
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const folders = Array.from(doc.querySelectorAll('a')).filter(a => a.href.endsWith('/'));
-
+            fetch('./') // replace with the path to the current directory
+                .then(response => response.json())
+                .then(data => {
+                    const directories = data.filter(item => item.type === 'directory');
                     const container = document.getElementById('folders-container');
-                    folders.forEach(folder => {
+                    directories.forEach(directory => {
+                        console.log(directory);
                         const button = document.createElement('button');
-                        button.textContent = folder.textContent;
+                        button.textContent = directory.name;
                         button.addEventListener('click', () => {
-                            window.location.href = base_url + folder.pathname;
+                            window.location.href = `${base_url}/${directory.name}`;
                         });
                         container.appendChild(button);
                     });
