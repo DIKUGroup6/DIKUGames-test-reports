@@ -7,9 +7,27 @@
 
         window.onload = function() {
             fetch('./') // replace with the path to the current directory
-                .then(data => data.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text(); // change to response.text() to log the response body
+                })
                 .then(data => {
-                    console.log(data);
+                    console.log(data); // log the response body
+                    const directories = data.filter(item => item.type === 'directory');
+                    const container = document.getElementById('folders-container');
+                    directories.forEach(directory => {
+                        const button = document.createElement('button');
+                        button.textContent = directory.name;
+                        button.addEventListener('click', () => {
+                            window.location.href = `${base_url}/${directory.name}`;
+                        });
+                        container.appendChild(button);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
                 });
         };
     </script>
