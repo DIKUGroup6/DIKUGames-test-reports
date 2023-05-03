@@ -62,4 +62,16 @@ function runTestsAndUploadReport() {
 
     // Navigate to BreakoutTests folder
     const command = `cd DIKUGames/${testFolder} && dotnet test --collect:"XPlat Code Coverage"`;
+
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`dotnet test error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`dotnet test stderr: ${stderr}`);
+            return;
+        }
+        console.log(`dotnet test stdout: ${stdout}`);
+    })
 }
