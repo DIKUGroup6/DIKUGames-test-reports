@@ -19,6 +19,7 @@ app.get("/test", (req, res) => {
 
 // Define a route to receive the webhook event
 app.post('/github', (req, res) => {
+    console.log(req)
     // Extract the event type from the headers
     const eventType = req.headers['X-GitHub-Event'];
 
