@@ -21,7 +21,7 @@ app.get("/test", (req, res) => {
 app.post('/github', (req, res) => {
     console.log(req)
     // Extract the event type from the headers
-    const eventType = req.rawHeaders['X-GitHub-Event'];
+    const eventType = req.headers['x-github-event'];
 
     // Handle the event based on its type
     switch (eventType) {
