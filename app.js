@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 
 app.get("/github", (req, res) => {
-    res.send(req);
+    console.log(req);
 })
 
 // Define a route to receive the webhook event
