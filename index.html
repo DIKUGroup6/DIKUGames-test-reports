@@ -16,21 +16,33 @@
                 .then(reports => {
                     console.log(reports);
                     const container = document.getElementById('folders-container');
-                    reports.sort((a, b) => a.name < b.name ? -1 : 1).forEach(report => {
+                    reports.sort((a, b) => a.name < b.name ? -1 : 1).forEach((report, idx) => {
                         const card = document.createElement('div')
                         card.className += "p-6 bg-white border border-gray-200 rounded-lg shadow"
 
                         const cardBody = document.createElement('div')
                         cardBody.className += "mb-2"
 
+
+                        const header = document.createElement('div')
+                        header.className += "flex w-full border-b-2"
+
                         const title = document.createElement('h5')
-                        title.className += "text-lg font-bold text-blue-400 border-b-2"
+                        title.className += "text-lg font-bold text-blue-400 mr-auto"
                         const titleText = document.createTextNode(report.name);
                         title.appendChild(titleText);
 
+                        const titleId = document.createElement('h5')
+                        title.className += "text-lg font-bold text-blue-400 mr-auto"
+                        const titleIdText = document.createTextNode(`ID: ${idx + 1}`);
+                        titleId.appendChild(titleIdText);
+
+                        header.appendChild(title)
+                        header.appendChild(titleId)
+
                         const text = document.createElement('p')
                         text.className += ""
-                        text.innerHTML = `<strong>Path:</strong> ${report.path}<br><strong>Size:</strong> ${report.size}<br><strong>Type:</strong> ${report.type}<br><strong>GitHub URL:</strong> ${report.html_url}`
+                        text.innerHTML = `<strong>Path:</strong> ${report.path}<br><strong>Size:</strong> ${report.size}<br><strong>Type:</strong> ${report.type}<br><strong>GitHub URL:</strong> <button class="text-blue-400" href=${report.html_url}>Klik her</button>`
 
 
                         const button = document.createElement('button')
@@ -40,7 +52,7 @@
                             window.location.href = `${base_url}/${report.path}`;
                         });
 
-                        cardBody.appendChild(title);
+                        cardBody.appendChild(header);
                         cardBody.appendChild(text);
                         card.appendChild(cardBody);
                         card.appendChild(button);
@@ -53,7 +65,7 @@
 </head>
 <body>
 
-<div class="p-6 flex flex-col justify-center items-center">
+<div class="max-w-5xl mx-auto h-screen flex flex-col items-center">
     <h1 class="text-3xl font-bold">Breakout Code Coverage Reports!</h1>
     <div id="folders-container" class="grid grid-cols-2 gap-2"></div>
 </div>
