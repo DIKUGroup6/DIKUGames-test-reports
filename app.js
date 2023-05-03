@@ -49,14 +49,21 @@ app.listen(PORT, () => {
 
 function runTestsAndUploadReport() {
     // Set owner and repo for running tests
+    console.log("Hi")
     const testOwner = "DIKUGroup6";
+    console.log("Hi2")
+
     const testRepo = "DIKUGames";
+    console.log("Hi3")
+
     const testFolder = "BreakoutTests";
+    console.log("Hi4")
 
     // Set owner and repo for uploading reports
     const reportOwner = "DIKUGroup6";
     const reportRepo = "dikugroup6.github.io";
     const reportPath = "reports";
+    console.log("Hi5")
 
     // Navigate to BreakoutTests folder
     const command = `cd DIKUGames/${testFolder} && dotnet test --collect:"XPlat Code Coverage"`;
