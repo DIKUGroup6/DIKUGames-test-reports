@@ -2,6 +2,7 @@
   "name": "dikugroup6.github.io",
   "version": "1.0.0",
   "dependencies": {
+    "@octokit/rest": "^19.0.7",
     "body-parser": "^1.20.2",
     "express": "^4.18.2"
   }
