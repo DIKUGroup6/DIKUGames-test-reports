@@ -95,7 +95,7 @@ function runTestsAndUploadReport() {
 
             // Upload report files to GitHub
             const files = [
-                { name: "index.html", path: `./${testFolder}/Report/index.html` },
+                {name: "index.html", path: `./${testFolder}/Report/index.html`},
                 // Add other report files here
             ];
             const commitMessage = "Upload test coverage report";
@@ -112,6 +112,6 @@ function runTestsAndUploadReport() {
             }).catch(error => {
                 console.error(`Upload error: ${error.message}`);
             });
-        });
-    });
+        })
+    })
 }
