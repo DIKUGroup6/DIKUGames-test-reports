@@ -12,16 +12,10 @@ const octokit = new Octokit({
     auth: "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"
 });
 
-// Replace with your repository details
-const owner = "simonsejse";
-const repo = "DIKUGroup6";
-
-
 app.get("/test", (req, res) => {
     console.log(req);
     res.send("OK 1");
 })
-
 
 // Define a route to receive the webhook event
 app.post('/github', (req, res) => {
@@ -54,9 +48,18 @@ app.listen(PORT, () => {
 });
 
 function runTestsAndUploadReport() {
+    // Set owner and repo for running tests
+    const testOwner = "DIKUGroup6";
+    const testRepo = "DIKUGames";
+    const testFolder = "BreakoutTests";
+
+    // Set owner and repo for uploading reports
+    const reportOwner = "DIKUGroup6";
+    const reportRepo = "dikugroup6.github.io";
+    const reportPath = "reports";
+
     // Navigate to BreakoutTests folder
-    const folder = "DIKUGroup6/BreakoutTests";
-    const command = `cd ${folder} && dotnet test --collect:"XPlat Code Coverage"`;
+    const command = `cd DIKUGames/${testFolder} && dotnet test --collect:"XPlat Code Coverage"`;
 
     exec(command, (error, stdout, stderr) => {
         if (error) {
@@ -70,7 +73,7 @@ function runTestsAndUploadReport() {
         console.log(`dotnet test stdout: ${stdout}`);
 
         // Upload coverage report
-        const reportCommand = `cd ${folder} && reportgenerator -reports:$(gci TestResults -r -fi coverage.cobertura.xml | % { $_.FullName }) -targetdir:Report -reporttypes:Html`;
+        const reportCommand = `cd DIKUGames/${testFolder} && reportgenerator -reports:$(gci TestResults -r -fi coverage.cobertura.xml | % { $_.FullName }) -targetdir:Report -reporttypes:Html`;
 
         exec(reportCommand, (error, stdout, stderr) => {
             if (error) {
@@ -85,8 +88,23 @@ function runTestsAndUploadReport() {
 
             // Upload report files to GitHub
             const files = [
-                { name: "index.html", path: "./DIKUGroup6/BreakoutTests/Report/index.html" },
+                { name: "index.html", path: `./${testFolder}/Report/index.html` },
                 // Add other report files here
             ];
             const commitMessage = "Upload test coverage report";
+
+            octokit.repos.createOrUpdateFileContents({
+                owner: reportOwner,
+                repo: reportRepo,
+                path: `${reportPath}/index.html`, // Replace with your desired path
+                message: commitMessage,
+                content: Buffer.from(files[0].path).toString("base64"),
+                sha: null // Set to null to create a new file
+            }).then(result => {
+                console.log(`Upload successful. URL: ${result.data.html_url}`);
+            }).catch(error => {
+                console.error(`Upload error: ${error.message}`);
+            });
+        });
+    });
 }
