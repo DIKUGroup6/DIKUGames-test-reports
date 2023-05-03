@@ -7,6 +7,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
+app.get("/test", (req, res) => {
+    console.log(req);
+    res.send("OK 1");
+})
+
+
 // Define a route to receive the webhook event
 app.post('/github', (req, res) => {
     // Extract the event type from the headers
