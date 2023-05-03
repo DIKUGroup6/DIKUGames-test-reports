@@ -8,6 +8,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+const octokit = new Octokit({
+    auth: "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"
+});
 
 app.get("/test", (req, res) => {
     console.log(req);
