@@ -19,7 +19,7 @@
                     const container = document.getElementById('folders-container');
                     reports.sort((a, b) => a.name < b.name ? -1 : 1).forEach((report, idx) => {
                         const card = document.createElement('div')
-                        card.className += "p-6 bg-white border border-gray-200 rounded-lg shadow"
+                        card.className += "p-6 bg-white border border-gray-200 rounded-lg shadow-md"
 
                         const cardBody = document.createElement('div')
                         cardBody.className += "mb-2"
@@ -67,7 +67,7 @@
 <body>
 
 <div class="my-6 mx-4 h-screen flex flex-col items-center max-w-5xl mx-auto px-6">
-    <div class="block my-6 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+    <div class="block my-6 p-6 bg-white border border-gray-200 rounded-lg shadow-md hover:bg-gray-100">
         <h1 class="mb-4 text-3xl text-center font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-5xl">Breakout <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-emerald-700">Code Coverage</span> Reports</h1>
         <p class="mb-6 text-sm md:text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48">Denne side har til formål at fungere som en historik over code coverage logging for vores projekt. På den måde kan vi nemt tilgå vores test og se vores fremskridt og udvikling over tid. Vi kan bruge siden som et værktøj til at evaluere vores testdækning og sikre, at vores kode er så godt testet som muligt, samtidig med at vi kan identificere områder, hvor der er plads til forbedringer. Gennem konsekvent overvågning af vores code coverage kan vi arbejde henimod at opretholde en høj kvalitet af vores kode og forbedre vores udviklingsproces.</p>
     </div>
