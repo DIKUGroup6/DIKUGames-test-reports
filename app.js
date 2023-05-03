@@ -7,13 +7,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-app.get("/github", (req, res) => {
-    console.log(req);
-    res.send("OK");
-})
-
 // Define a route to receive the webhook event
-app.post('/webhook', (req, res) => {
+app.post('/github', (req, res) => {
     // Extract the event type from the headers
     const eventType = req.headers['x-github-event'];
 
